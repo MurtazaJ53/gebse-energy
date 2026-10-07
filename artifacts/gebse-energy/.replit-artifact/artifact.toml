@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "GEBSE Clean Energy"
+description = "A public company website for GEBSE, presenting its biogas, solar-panel cleaning, and waste-management solutions using the supplied company materials."
+version = "1.0.0"
+id = "artifacts/gebse-energy"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23587
+
+[services.development]
+run = "pnpm --filter @workspace/gebse-energy run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/gebse-energy", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/gebse-energy/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23587"
+BASE_PATH = "/"
